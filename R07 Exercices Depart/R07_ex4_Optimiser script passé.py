@@ -25,7 +25,7 @@ def extraire_cours_groupe(full_f_name):
 	cours = f_name[2][index_cours:index_cours+6]
 	index_groupe = f_name[3].find('gr')
 	groupe = f_name[3][index_groupe:index_groupe+6]
-	return (f"{cours}+'/'+{groupe}")
+	return (f"{cours}/{groupe}")
 
 def obtenir_Liste_etudiants(full_f_name):
 	noms_Etudiants=[]
@@ -41,6 +41,7 @@ full_f_name = 'Ex4_ListeEtudiants_cours4201B3EM_gr1010.csv'
 cours_groupe = extraire_cours_groupe(full_f_name)
 os.makedirs(cours_groupe)
 os.chdir(cours_groupe)
+os.chdir(os.path.dirname(__file__))
 noms_Etudiants = obtenir_Liste_etudiants(full_f_name)
 for item in noms_Etudiants:        
-    os.mkdir(item)
+    os.mkdir(f"{cours_groupe}\{item}")
