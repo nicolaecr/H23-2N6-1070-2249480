@@ -1,9 +1,8 @@
 
 import csv
-from dis import disco
 import json
 import os
-from statistics import quantiles
+
 
 from traitlets import parse_notifier_name
 os.chdir(os.path.dirname(__file__)) # Cette ligne fait que l'exécution du script aura toujours lieu dans le répertoire où il se trouve.
@@ -26,16 +25,22 @@ with open("data_ventes.csv","r",encoding='utf-8') as fichier :
     next(csv_reader)
     next(csv_reader)
     liste_client = []
+    dictio = {}
     dic = {}
-    int = 1
-    quantity = 3
+    quantity = 1
     for line in csv_reader:
-        dic = {"ID":line[0],"nom":line[1],"prenom":line[2]}
-        #for 
-        int+= 1
-        quantity+= 1
+        liste_product=[]
+        for y in line[3:]:
+            dictio = {"productid":quantity,"quantity":y}
+            liste_product.append(dictio)
+            quantity+=1
+            if quantity == len(line[3:]):
+                quantity+=1
+                quantity = 0
+                break
+        dic = {"ID":line[0],"nom":line[1],"prenom":line[2],"commande":liste_product}
         liste_client.append(dic)
-        print(json.dumps(liste_client,indent=4))
-        
-#"commande":[int],"quantity":line[quantity]
+    print(liste_client)
+
+
 
